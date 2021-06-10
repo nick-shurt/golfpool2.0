@@ -7,7 +7,7 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const Entry = require('./models/entry');
 const app = express();
-app.listen(3000, () => console.log('listening at port 3000'));
+app.listen(process.env.PORT || 3000, () => console.log('listening at port 3000'));
 app.use(express.static('public'));
 
 const dbURI = 'mongodb+srv://nshurtleff:Bakermayfield1!@golfcluster.nyfxg.mongodb.net/golf-entries?retryWrites=true&w=majority';
