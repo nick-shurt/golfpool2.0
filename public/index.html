@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Pool</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/golf_pool.css">
+</head>
+<body>
+
+<h1 style="color: #fff; text-align:center">PGA Championship Pool</h1>
+
+<p id="leader" style="color: #fff; text-align:center">Leader:</p>
+
+<div id="standings" class="container-fluid">
+    <div class="row top_margin">
+        <div class="col-lg-12">
+            <div class="table-responsive leaderboard2" style="margin-top: 20px;margin-bottom: 20px;">
+                <table class="table next_race" id="tableSmall">
+                    <tbody>
+                        <tr>
+                            <th colspan="4" style="border: 3px solid #a3a6a8;background:#133451;text-align: center;font-size:20px;">Standings</th>
+                        </tr>
+                        <tr>
+                            <th width="17%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;font-size:12px;">Entrant</th>
+                            <th colspan="2" width="20%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;font-size:12px;text-align:center;">Golfers</th>
+                            <th width="3%" style="border-bottom: 8px solid #a3a6a8;background:#2f70a8;font-size:10px;">Total</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="loader" class="loader container-fluid"></div>
+            </div>
+            <div class="table-responsive leaderboard" style="margin-top: 20px;margin-bottom: 20px;">
+                <table class="table next_race" id="tableLarge">
+                    <tbody>
+                        <tr>
+                            <th colspan="6" style="border: 3px solid #a3a6a8;background:#133451;text-align:center;font-size:20px;">Standings</th>
+                        </tr>
+                        <tr>
+                            <th width="19%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;">Entrant</th>
+                            <th width="19%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;;">Tier 1 Golfer</th>
+                            <th width="19%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;;">Tier 2 Golfer</th>
+                            <th width="19%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;;">Tier 3 Golfer</th>
+                            <th width="19%" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#2f70a8;">Tier 4 Golfer</th>
+                            <th width="5%" style="border-bottom: 8px solid #a3a6a8;background:#2f70a8;">Total</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    console.log('About to fetch...');
+
+    fetch('http://localhost:3000/data')
+    .then(
+        function(response) {
+            document.getElementById("loader").style="display:none";
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                response.status);
+                return;
+            }
+
+            response.json().then(function(data) {
+                console.log(data);
+                console.log(data[1].entry.length);
+
+                document.getElementById("leader").innerHTML = 'Leader: ' + data[0].Golfer + ' (' + data[0].Score + ')';
+
+                let table1 = document.getElementById("tableLarge");
+                for (var i = 0; i < data[1].entry.length; i++) {
+                    let score_color = [];
+                    let scores = [parseInt(data[1].entry[i].tier1golfer.score) || 0, parseInt(data[1].entry[i].tier2golfer.score) || 0, parseInt(data[1].entry[i].tier3golfer.score) || 0, parseInt(data[1].entry[i].tier4golfer.score) || 0];
+                    for (x = 0; x < 4; x++) {
+                        if (Math.max(...scores) == scores[x]) {
+                            score_color = ['#133451', '#133451', '#133451', '#133451'];
+                            score_color[x] = '#af4141'
+                        }
+                    }
+
+                    let row = table1.insertRow(2);
+
+                    row.innerHTML = '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#133451">' + data[1].entry[i].entrant + '&nbsp;(T: ' + data[1].entry[i].tiebreaker + ')</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[0] + '">(--) ' + data[1].entry[i].tier1golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier1golfer.score + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[1] + '">(--) ' + data[1].entry[i].tier2golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier2golfer.score + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[2] + '">(--) ' + data[1].entry[i].tier3golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier3golfer.score + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[3] + '">(--) ' + data[1].entry[i].tier4golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier4golfer.score + '</td>';
+                    let total = data[1].entry[i].totalScore;
+                    if (total > 0) total = "+" + total;
+                    if (total == 0) total = "E";
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;">' + total + '</td>';
+                }
+                
+                let table2 = document.getElementById("tableSmall");
+                for (var i = 0; i < data[1].entry.length; i++) {
+                    let score_color = [];
+                    let scores = [parseInt(data[1].entry[i].tier1golfer.score) || 0, parseInt(data[1].entry[i].tier2golfer.score) || 0, parseInt(data[1].entry[i].tier3golfer.score) || 0, parseInt(data[1].entry[i].tier4golfer.score) || 0];
+                    for (x = 0; x < 4; x++) {
+                        if (Math.max(...scores) == scores[x]) {
+                            score_color.push('#af4141');
+                        } else {
+                            score_color.push('#133451');
+                        }
+                    }
+
+                    let row = table2.insertRow(2);
+
+                    row.innerHTML = '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:' + score_color[2] + '">(--) ' + data[1].entry[i].tier3golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier3golfer.score + '</td>';
+                    row.innerHTML += '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:' + score_color[3] + '">(--) ' + data[1].entry[i].tier4golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier4golfer.score + '</td>';
+
+                    let row2 = table2.insertRow(2);
+
+                    let firstName = data[1].entry[i].entrant.split(' ')[0];
+                    let lastName = data[1].entry[i].entrant.split(' ')[1];
+                    row2.innerHTML += '<td rowspan="2" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#133451;">' + firstName + '<br> ' + lastName + '<br>(T: ' + data[1].entry[i].tiebreaker + ')</td>';
+                    row2.innerHTML += '<td style="border-right: 3px solid #a3a6a8;background:' + score_color[0] + '">(--) ' + data[1].entry[i].tier1golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier1golfer.score + '</td>';
+                    row2.innerHTML += '<td style="border-right: 3px solid #a3a6a8;background:' + score_color[1] + '">(--) ' + data[1].entry[i].tier2golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier2golfer.score + '</td>';
+                    let total = data[1].entry[i].totalScore;
+                    if (total > 0) total = "+" + total;
+                    if (total == 0) total = "E";
+                    row2.innerHTML += '<td rowspan="2" style="border-bottom: 8px solid #a3a6a8;background:#133451">' + total + '</td>';
+                }
+            });
+        }
+    )
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+    });
+</script>
+
+<script>
+    function awaitData() {
+        setTimeout(function(){
+            document.getElementById("loader").style="display:none";
+            document.getElementById("standings").style="display:block";
+        }, 10000);
+    }
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

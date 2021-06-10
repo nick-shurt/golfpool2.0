@@ -1,0 +1,62 @@
+body {
+  margin: 0px;
+  min-height: 100%;
+  background: linear-gradient(#194775, #848484); /*Standard syntax */
+  background-repeat: no-repeat;
+  background-color: #848484;
+}
+
+html {
+  margin: 0px;
+  height: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+.standings {
+  margin-left: 215px;
+}
+
+.top_margin {
+  margin-top: 50px;
+}
+
+.fantasy_pts_leaderboard {
+  margin-top: 0px;
+}
+
+.scoreboard_space {
+  margin-top: 10px;
+}
+
+.scoreboard_space_first {
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .standings {
+    margin-left: 0px;
+  }
+
+  .top_margin {
+    margin-top: 10px;
+  }
+
+  .fantasy_pts_leaderboard {
+    margin-top: 40px;
+  }
+
+  .scoreboard_space {
+    margin-top: 50px;
+  }
+
+  .scoreboard_space_first {
+    margin-top: 0px;
+  }
+}

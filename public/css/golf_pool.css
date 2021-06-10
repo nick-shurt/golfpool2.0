@@ -1,0 +1,79 @@
+.next_race {
+    color: #fff;
+    border: 3px solid #a3a6a8;
+    background-color: #333;
+    margin: 0 auto;
+    width: 75%;
+}
+
+.leaderboard {
+    visibility: visible;
+    position: absolute;
+    width: 100%;
+    top: 20px;
+}
+
+.leaderboard2 {
+    visibility: hidden;
+}
+
+body {
+    /*background: url("https://amp.businessinsider.com/images/5cb37d0daefeef046521f545-750-419.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+    background: black;
+}
+
+#wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 767px) {
+    .next_race {
+        color: #fff;
+        border: 3px solid #a3a6a8;
+        background-color: #333;
+        margin: 0 auto;
+        width:100%;
+    }
+
+    .leaderboard {
+        visibility: hidden;
+    }
+
+    .leaderboard2 {
+        visibility: visible;
+        position: relative;
+        /*top: -190px;*/
+        border: none;
+        width: 100%;
+        font-size: 9px;
+    }
+}
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #2f70a8;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin-top: 80px;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

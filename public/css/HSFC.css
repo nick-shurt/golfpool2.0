@@ -1,0 +1,113 @@
+.logo {
+    color: #007AC3 !important;
+}
+
+.logo:hover {
+    color: #00a2ff !important;
+}
+
+.logo span {
+    color: #d6d6d6 !important;
+}
+
+.logo:hover span {
+    color: #f2f2f2 !important;
+}
+
+.div_size {
+    height: 520px;
+    margin-top: 80px;
+}
+
+h1,p,h2 {
+    margin: 0;
+    padding: 20px;
+}
+
+body {
+    margin: 0px;
+    min-height: 100%;
+    background: linear-gradient(#194775, #848484);  /*Standard syntax */
+    background-repeat: no-repeat;
+    background-color: #848484;
+}
+
+html {
+    margin: 0px;
+    height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {height: 450px}
+
+/* Set gray background color and 100% height */
+.sidenav {
+  padding-top: 20px;
+  background-color: #f1f1f1;
+  height: 100%;
+}
+
+.my_pills {
+    color: #fff;
+}
+
+.my_dropdowns {
+    color: #fff;
+}
+
+/*.my_dropdowns:focus, .my_dropdowns:active {
+    background-color: #848490 !important;
+    color: #fff;
+    border: none;
+}*/
+
+.game_home {
+    background-color: #fff; 
+    height: 473px;
+    border-radius: 0 0 4px 4px;
+}
+
+.leaderboard {
+    color: #007AC3;
+    margin-left: 0px;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+}
+
+.leader_bracket:hover, .leader_bracket:focus {
+    text-decoration: none;
+    color: #00a2ff;
+}
+
+.no_highlight:focus {
+     outline:none;  
+}
+
+/* Set black background color, white text and some padding */
+footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+  .sidenav {
+    height: auto;
+    padding: 15px;
+  }
+  .row.content {height:auto;} 
+
+  .game_home {height: 513px;}
+
+  .leaderboard {padding-left: 15px; margin-left: 0;}
+
+  .div_size {height: 560px; margin-top: 40px;}
+}
