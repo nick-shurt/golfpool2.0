@@ -2,18 +2,18 @@ const par = 72;
 
 const express = require('express');
 const puppeteer = require('puppeteer');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-const Entry = require('./models/entry');
+//const Entry = require('./models/entry');
 const app = express();
 app.listen(process.env.PORT || 3000, () => console.log('listening at port 3000'));
 app.use(express.static('public'));
 
-const dbURI = 'mongodb+srv://nshurtleff:Bakermayfield1!@golfcluster.nyfxg.mongodb.net/golf-entries?retryWrites=true&w=majority';
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => console.log('connected to db'))
-    .catch((err) => console.log(err));
+//const dbURI = 'mongodb+srv://nshurtleff:Bakermayfield1!@golfcluster.nyfxg.mongodb.net/golf-entries?retryWrites=true&w=majority';
+//mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    //.then((result) => console.log('connected to db'))
+    //.catch((err) => console.log(err));
 
 app.get('/data', async function (req, res) {
     let leaders = await scrape('https://www.espn.com/golf/leaderboard/_/tournamentId/401243418');
@@ -22,7 +22,7 @@ app.get('/data', async function (req, res) {
     res.send(data);
 });
 
-app.get('/add-entry', (req, res) => {
+/*app.get('/add-entry', (req, res) => {
     const entry = new Entry({
         entrant: 'Nick Shurtleff',
         tier1golfer: 'Jon Rahm',
@@ -39,7 +39,7 @@ app.get('/add-entry', (req, res) => {
         .catch((err) => {
             console.log(err);
         });
-})
+})*/
 
 async function getEntries(leaders) {
     let entrants = [];
@@ -118,7 +118,7 @@ async function getEntries(leaders) {
 }
 
 async function scrape(url) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox','--disable-setuid-sandbox']});
     const page = await browser.newPage();
     await page.goto(url);
 
