@@ -58,6 +58,7 @@ async function getEntries(leaders) {
     
     let numOfEntrants = sheet.rowCount - 1;
     console.log(numOfEntrants);
+    console.log(leaders);
     for (var i = 0; i < numOfEntrants; i++) {
         entrants.push(rows[i].Name);
         tier1golfers.push(rows[i].Tier1);
