@@ -17,9 +17,9 @@ app.use(express.static('public'));
 
 app.get('/data', async function (req, res) {
     let leaders = await scrape('https://www.espn.com/golf/leaderboard/_/tournamentId/401243418');
-    let entries = await getEntries(leaders);
-    let data = [leaders.leaderboard[0], entries];
-    res.send(data);
+    //let entries = await getEntries(leaders);
+    //let data = [leaders.leaderboard[0], entries];
+    res.send(leaders);
 });
 
 app.get('/test', function (req, res) {
