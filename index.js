@@ -187,6 +187,7 @@ async function scrape(url) {
         }
     }
     browser.close();
+    console.log(leaders);
 
     return leaders;
 }
