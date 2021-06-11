@@ -131,16 +131,16 @@ async function scrape(url) {
                     '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[3]',
                     '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[1]',
                     '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[4]',
-                    '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[5]',
-                    '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[6]',
-                    '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[7]'];
+                    '/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[5]'];
+                    //'/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[6]',
+                    //'/html/body/div[1]/div/div/div/div[4]/div[3]/div/div[1]/section[2]/div/div/div/div[2]/div[3]/div/div/div/div[2]/table/tbody/tr[$]/td[7]'];
 
     let leaders = {
         leaderboard: []
     };
 
-    for (var i = 1; i <= 5; i++) {
-        for (var x = 0; x < 7; x++) {
+    for (var i = 1; i <= 156; i++) {
+        for (var x = 0; x < 5; x++) {
             xpaths[x] = xpaths[x].replace("$", i);
         }
 
@@ -164,13 +164,13 @@ async function scrape(url) {
         const r2 = await el5.getProperty('textContent');
         const round2 = await r2.jsonValue();
 
-        const [el6] = await page.$x(xpaths[5]);
+        /*const [el6] = await page.$x(xpaths[5]);
         const r3 = await el6.getProperty('textContent');
         const round3 = await r3.jsonValue();
 
         const [el7] = await page.$x(xpaths[6]);
         const r4 = await el7.getProperty('textContent');
-        const round4 = await r4.jsonValue();
+        const round4 = await r4.jsonValue();*/
 
         leaders.leaderboard.push({
             "Place" : rawPlace,
@@ -178,11 +178,11 @@ async function scrape(url) {
             "Score" : rawTotal,
             "R1" : round1,
             "R2" : round2,
-            "R3" : round3,
-            "R4" : round4
+            "R3" : '--',
+            "R4" : '--'
         });
 
-        for (var x = 0; x < 7; x++) {
+        for (var x = 0; x < 5; x++) {
             xpaths[x] = xpaths[x].replace("tbody/tr[" + i + "]", "tbody/tr[$]");
         }
     }
