@@ -145,19 +145,20 @@ async function getEntries(leaders) {
         }
 
         for (var x = 0; x < 4; x++) {
-            if (golfers_scores[x].status != 'cut' || golfers_scores[x].status != 'wd' || golfers_scores[x].status != 'dq') {
+            if (golfers_scores[x].status != 'cut' && golfers_scores[x].status != 'wd' && golfers_scores[x].status != 'dq') {
                 golfers_scores[x].score = (golfers_scores[x].score > 0) ? '+' + golfers_scores[x].score : golfers_scores[x].score;
             }
             if (golfers_scores[x].status == 'cut') {
                 let score  = (golfers_scores[x].round1 - par) + (golfers_scores[x].round2 - par);
+                score += (80 - par) * 2;
                 golfers_scores[x].score = (score > 0) ? '+' + score : score;
             }
             if (golfers_scores[x].status == 'wd' || golfers_scores[x].status == 'dq') {
-                let score  = (golfers_scores[x].round1 == '--') ? 80 - par : golfers_scores[x].round1;
-                score += (golfers_scores[x].round2 == '--') ? 80 - par : golfers_scores[x].round2;
-                score += (golfers_scores[x].round3 == '--') ? 80 - par : golfers_scores[x].round3;
-                score += 80 - par;
-                golfers_scores[x].score = (score > 0) ? '+' + score : score;
+                //let score  = (golfers_scores[x].round1 == '--') ? 80 - par : golfers_scores[x].round1;
+                //score += (golfers_scores[x].round2 == '--') ? 80 - par : golfers_scores[x].round2;
+                //score += (golfers_scores[x].round3 == '--') ? 80 - par : golfers_scores[x].round3;
+                //score += 80 - par;
+                golfers_scores[x].score = '+32';
             }
         }
 
