@@ -139,7 +139,7 @@ async function scrape(url) {
         leaderboard: []
     };
 
-    for (var i = 1; i <= 100; i++) {
+    for (var i = 1; i <= 5; i++) {
         for (var x = 0; x < 7; x++) {
             xpaths[x] = xpaths[x].replace("$", i);
         }
