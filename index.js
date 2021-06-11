@@ -4,6 +4,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 //const mongoose = require('mongoose');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const http = require("https");
 
 //const Entry = require('./models/entry');
 const app = express();
@@ -16,14 +17,18 @@ app.use(express.static('public'));
     //.catch((err) => console.log(err));
 
 app.get('/data', async function (req, res) {
-    let leaders = await scrape('https://www.espn.com/golf/leaderboard/_/tournamentId/401243418');
-    //let entries = await getEntries(leaders);
-    //let data = [leaders.leaderboard[0], entries];
-    res.send(leaders);
+    //let leaders = await scrape('https://www.espn.com/golf/leaderboard/_/tournamentId/401243418');
+    let leaders = await getLeaders();
+    //console.log(leaders);
+    let entries = await getEntries(leaders);
+    let data = [leaders[0], entries];
+    res.send(data);
 });
 
-app.get('/test', function (req, res) {
-    res.send('Hello World!');
+app.get('/test', async function (req, res) {
+    let leaders = await getLeaders();
+    console.log(leaders);
+    res.send(leaders);
 });
 
 /*app.get('/add-entry', (req, res) => {
@@ -45,6 +50,57 @@ app.get('/test', function (req, res) {
         });
 })*/
 
+function getLeaders() {
+    return new Promise((resolve, reject) => {
+        const options = {
+            "method": "GET",
+            "hostname": "golf-leaderboard-data.p.rapidapi.com",
+            "port": null,
+            "path": "/leaderboard/285",
+            "headers": {
+                "x-rapidapi-key": "21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df",
+                "x-rapidapi-host": "golf-leaderboard-data.p.rapidapi.com",
+                "useQueryString": true
+            }
+        };
+
+        const req = http.request(options, function (res) {
+            const chunks = [];
+            let leaders = [];
+            res.on("data", function (chunk) {
+                chunks.push(chunk);
+            });
+
+            res.on("end", function () {
+                const body = Buffer.concat(chunks);
+                let jsonRes = JSON.parse(body);
+                jsonRes.results.leaderboard.forEach(leader => {
+                    let name = leader.first_name + ' ' + leader.last_name;
+                    let round1 = leader.rounds[0].strokes;
+                    let round2 = '--';
+                    if (typeof leader.rounds[1] !== 'undefined') {
+                        round2 = leader.rounds[1].strokes;
+                    }
+
+                    leaders.push({
+                        "Place" : leader.position,
+                        "Golfer" : name,
+                        "Score" : leader.total_to_par,
+                        "Status" : leader.status,
+                        "R1" : round1,
+                        "R2" : round2,
+                        "R3" : '--',
+                        "R4" : '--'
+                    });
+                });
+                resolve(leaders);
+            });      
+        });
+
+        req.end();
+    });
+}
+
 async function getEntries(leaders) {
     let entrants = [];
     let tier1golfers = [];
@@ -62,7 +118,6 @@ async function getEntries(leaders) {
     
     let numOfEntrants = sheet.rowCount - 1;
     console.log(numOfEntrants);
-    console.log(leaders);
     for (var i = 0; i < numOfEntrants; i++) {
         entrants.push(rows[i].Name);
         tier1golfers.push(rows[i].Tier1);
@@ -81,20 +136,23 @@ async function getEntries(leaders) {
     for (var k = 0; k < numOfEntrants; k++) {
         let golfers_scores = [];
         for (var j = 0; j < 4; j++) {
-            leaders.leaderboard.forEach(leader => {
+            leaders.forEach(leader => {
                 if (allGolfers[j][k].localeCompare(leader.Golfer) == 0) {
-                    let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
+                    let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
                     golfers_scores.push(golfer_scores);
                 }
             });
         }
 
         for (var x = 0; x < 4; x++) {
-            if (golfers_scores[x].score == 'CUT') {
+            if (golfers_scores[x].status != 'cut' || golfers_scores[x].status != 'wd' || golfers_scores[x].status != 'dq') {
+                golfers_scores[x].score = (golfers_scores[x].score > 0) ? '+' + golfers_scores[x].score : golfers_scores[x].score;
+            }
+            if (golfers_scores[x].status == 'cut') {
                 let score  = (golfers_scores[x].round1 - par) + (golfers_scores[x].round2 - par);
                 golfers_scores[x].score = (score > 0) ? '+' + score : score;
             }
-            if (golfers_scores[x].score == 'WD' || golfers_scores[x].score == 'DQ') {
+            if (golfers_scores[x].status == 'wd' || golfers_scores[x].status == 'dq') {
                 let score  = (golfers_scores[x].round1 == '--') ? 80 - par : golfers_scores[x].round1;
                 score += (golfers_scores[x].round2 == '--') ? 80 - par : golfers_scores[x].round2;
                 score += (golfers_scores[x].round3 == '--') ? 80 - par : golfers_scores[x].round3;
@@ -187,7 +245,6 @@ async function scrape(url) {
         }
     }
     browser.close();
-    console.log(leaders);
 
     return leaders;
 }

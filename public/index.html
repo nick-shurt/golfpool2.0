@@ -48,6 +48,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <div id="loader2" class="loader container-fluid"></div>
             </div>
         </div>
     </div>
@@ -60,6 +61,7 @@
     .then(
         function(response) {
             document.getElementById("loader").style="display:none";
+            document.getElementById("loader2").style="display:none";
             if (response.status !== 200) {
                 console.log('Looks like there was a problem. Status Code: ' +
                 response.status);

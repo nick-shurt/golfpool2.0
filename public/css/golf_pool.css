@@ -14,7 +14,7 @@
 }
 
 .leaderboard2 {
-    visibility: hidden;
+    display: none;
 }
 
 body {
@@ -48,6 +48,7 @@ body {
 
     .leaderboard2 {
         visibility: visible;
+        display: block;
         position: relative;
         /*top: -190px;*/
         border: none;
