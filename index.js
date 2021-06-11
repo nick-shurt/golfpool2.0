@@ -22,6 +22,10 @@ app.get('/data', async function (req, res) {
     res.send(data);
 });
 
+app.get('/test', function (req, res) {
+    res.send('Hello World!');
+});
+
 /*app.get('/add-entry', (req, res) => {
     const entry = new Entry({
         entrant: 'Nick Shurtleff',
