@@ -74,6 +74,11 @@
 
                 document.getElementById("leader").innerHTML = 'Leader: ' + data[0].Golfer + ' (' + data[0].Score + ')';
 
+                let score1 = (data[1].entry[i].tier1golfer.score != 0) ? data[1].entry[i].tier1golfer.score : 'E';
+                let score2 = (data[1].entry[i].tier2golfer.score != 0) ? data[1].entry[i].tier2golfer.score : 'E';
+                let score3 = (data[1].entry[i].tier3golfer.score != 0) ? data[1].entry[i].tier3golfer.score : 'E';
+                let score4 = (data[1].entry[i].tier4golfer.score != 0) ? data[1].entry[i].tier4golfer.score : 'E';
+
                 let table1 = document.getElementById("tableLarge");
                 for (var i = 0; i < data[1].entry.length; i++) {
                     let score_color = [];
@@ -88,10 +93,10 @@
                     let row = table1.insertRow(2);
 
                     row.innerHTML = '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#133451">' + data[1].entry[i].entrant + '&nbsp;(T: ' + data[1].entry[i].tiebreaker + ')</td>';
-                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[0] + '">(--) ' + data[1].entry[i].tier1golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier1golfer.score + '</td>';
-                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[1] + '">(--) ' + data[1].entry[i].tier2golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier2golfer.score + '</td>';
-                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[2] + '">(--) ' + data[1].entry[i].tier3golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier3golfer.score + '</td>';
-                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[3] + '">(--) ' + data[1].entry[i].tier4golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier4golfer.score + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[0] + '">(--) ' + data[1].entry[i].tier1golfer.golfer + '<strong>:</strong> ' + score1 + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[1] + '">(--) ' + data[1].entry[i].tier2golfer.golfer + '<strong>:</strong> ' + score2 + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[2] + '">(--) ' + data[1].entry[i].tier3golfer.golfer + '<strong>:</strong> ' + score3 + '</td>';
+                    row.innerHTML += '<td style="border-bottom: 8px solid #a3a6a8;background:#133451;border-right: 3px solid #a3a6a8;background:' + score_color[3] + '">(--) ' + data[1].entry[i].tier4golfer.golfer + '<strong>:</strong> ' + score4 + '</td>';
                     let total = data[1].entry[i].totalScore;
                     if (total > 0) total = "+" + total;
                     if (total == 0) total = "E";
@@ -112,16 +117,16 @@
 
                     let row = table2.insertRow(2);
 
-                    row.innerHTML = '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:' + score_color[2] + '">(--) ' + data[1].entry[i].tier3golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier3golfer.score + '</td>';
-                    row.innerHTML += '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:' + score_color[3] + '">(--) ' + data[1].entry[i].tier4golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier4golfer.score + '</td>';
+                    row.innerHTML = '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:' + score_color[2] + '">(--) ' + data[1].entry[i].tier3golfer.golfer + '<strong>:</strong> ' + score3 + '</td>';
+                    row.innerHTML += '<td style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:' + score_color[3] + '">(--) ' + data[1].entry[i].tier4golfer.golfer + '<strong>:</strong> ' + score4 + '</td>';
 
                     let row2 = table2.insertRow(2);
 
                     let firstName = data[1].entry[i].entrant.split(' ')[0];
                     let lastName = data[1].entry[i].entrant.split(' ')[1];
                     row2.innerHTML += '<td rowspan="2" style="border-right: 3px solid #a3a6a8;border-bottom: 8px solid #a3a6a8;background:#133451;">' + firstName + '<br> ' + lastName + '<br>(T: ' + data[1].entry[i].tiebreaker + ')</td>';
-                    row2.innerHTML += '<td style="border-right: 3px solid #a3a6a8;background:' + score_color[0] + '">(--) ' + data[1].entry[i].tier1golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier1golfer.score + '</td>';
-                    row2.innerHTML += '<td style="border-right: 3px solid #a3a6a8;background:' + score_color[1] + '">(--) ' + data[1].entry[i].tier2golfer.golfer + '<strong>:</strong> ' + data[1].entry[i].tier2golfer.score + '</td>';
+                    row2.innerHTML += '<td style="border-right: 3px solid #a3a6a8;background:' + score_color[0] + '">(--) ' + data[1].entry[i].tier1golfer.golfer + '<strong>:</strong> ' + score1 + '</td>';
+                    row2.innerHTML += '<td style="border-right: 3px solid #a3a6a8;background:' + score_color[1] + '">(--) ' + data[1].entry[i].tier2golfer.golfer + '<strong>:</strong> ' + score2 + '</td>';
                     let total = data[1].entry[i].totalScore;
                     if (total > 0) total = "+" + total;
                     if (total == 0) total = "E";
