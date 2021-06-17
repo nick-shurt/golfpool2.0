@@ -72,12 +72,8 @@
                 console.log(data);
                 console.log(data[1].entry.length);
 
-                document.getElementById("leader").innerHTML = 'Leader: ' + data[0].Golfer + ' (' + data[0].Score + ')';
-
-                let score1 = (data[1].entry[i].tier1golfer.score != 0) ? data[1].entry[i].tier1golfer.score : 'E';
-                let score2 = (data[1].entry[i].tier2golfer.score != 0) ? data[1].entry[i].tier2golfer.score : 'E';
-                let score3 = (data[1].entry[i].tier3golfer.score != 0) ? data[1].entry[i].tier3golfer.score : 'E';
-                let score4 = (data[1].entry[i].tier4golfer.score != 0) ? data[1].entry[i].tier4golfer.score : 'E';
+                let leader_score = (data[0].Score != 0) ? data[0].Score : 'E';
+                document.getElementById("leader").innerHTML = 'Leader: ' + data[0].Golfer + ' (' + leader_score + ')';
 
                 let table1 = document.getElementById("tableLarge");
                 for (var i = 0; i < data[1].entry.length; i++) {
@@ -89,6 +85,11 @@
                             score_color[x] = '#af4141'
                         }
                     }
+
+                    let score1 = (data[1].entry[i].tier1golfer.score != 0) ? data[1].entry[i].tier1golfer.score : 'E';
+                    let score2 = (data[1].entry[i].tier2golfer.score != 0) ? data[1].entry[i].tier2golfer.score : 'E';
+                    let score3 = (data[1].entry[i].tier3golfer.score != 0) ? data[1].entry[i].tier3golfer.score : 'E';
+                    let score4 = (data[1].entry[i].tier4golfer.score != 0) ? data[1].entry[i].tier4golfer.score : 'E';
 
                     let row = table1.insertRow(2);
 
@@ -109,11 +110,15 @@
                     let scores = [parseInt(data[1].entry[i].tier1golfer.score) || 0, parseInt(data[1].entry[i].tier2golfer.score) || 0, parseInt(data[1].entry[i].tier3golfer.score) || 0, parseInt(data[1].entry[i].tier4golfer.score) || 0];
                     for (x = 0; x < 4; x++) {
                         if (Math.max(...scores) == scores[x]) {
-                            score_color.push('#af4141');
-                        } else {
-                            score_color.push('#133451');
+                            score_color = ['#133451', '#133451', '#133451', '#133451'];
+                            score_color[x] = '#af4141'
                         }
                     }
+
+                    let score1 = (data[1].entry[i].tier1golfer.score != 0) ? data[1].entry[i].tier1golfer.score : 'E';
+                    let score2 = (data[1].entry[i].tier2golfer.score != 0) ? data[1].entry[i].tier2golfer.score : 'E';
+                    let score3 = (data[1].entry[i].tier3golfer.score != 0) ? data[1].entry[i].tier3golfer.score : 'E';
+                    let score4 = (data[1].entry[i].tier4golfer.score != 0) ? data[1].entry[i].tier4golfer.score : 'E';
 
                     let row = table2.insertRow(2);
 
