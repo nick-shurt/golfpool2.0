@@ -1,4 +1,4 @@
-const par = 72;
+const par = 71;
 
 const express = require('express');
 const puppeteer = require('puppeteer');
