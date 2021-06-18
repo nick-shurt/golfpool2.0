@@ -173,6 +173,7 @@ async function getEntries(leaders) {
 
         let worstScore = Math.max(parseInt(golfers_scores[0].score) || 0, parseInt(golfers_scores[1].score) || 0, parseInt(golfers_scores[2].score) || 0, parseInt(golfers_scores[3].score) || 0);
         let total = (parseInt(golfers_scores[0].score) || 0) + (parseInt(golfers_scores[1].score) || 0) + (parseInt(golfers_scores[2].score) || 0) + (parseInt(golfers_scores[3].score) || 0) - worstScore;
+        let t_diff = Math.abs(leaders[0].Score - tiebreakers[k]);
 
         entries.entry.push({
             entrant: entrants[k],
@@ -181,11 +182,12 @@ async function getEntries(leaders) {
             tier3golfer: golfers_scores[2],
             tier4golfer: golfers_scores[3],
             totalScore: total,
-            tiebreaker: tiebreakers[k]
+            tiebreaker: tiebreakers[k],
+            tiebreaker_diff: t_diff
         });
     }
     
-    entries.entry.sort((a, b) => (a.totalScore < b.totalScore) ? 1 : -1);
+    entries.entry.sort((a, b) => (a.totalScore < b.totalScore) ? 1 : ((a.totalScore == b.totalScore) ? ((a.tiebreaker_diff < b.tiebreaker_diff) ? 1 : -1) : -1));
 
     return entries;
 }
