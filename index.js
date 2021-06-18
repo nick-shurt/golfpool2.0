@@ -82,11 +82,20 @@ function getLeaders() {
                         round2 = leader.rounds[1].strokes;
                     }
 
+                    let thru = '--';
+                    if (leader.holes_played != 0) {
+                        thru = leader.holes_played;
+                    }
+                    if (leader.holes_played == 18) {
+                        thru = 'F';
+                    }
+
                     leaders.push({
                         "Place" : leader.position,
                         "Golfer" : name,
                         "Score" : leader.total_to_par,
                         "Status" : leader.status,
+                        "Thru" : thru,
                         "R1" : round1,
                         "R2" : round2,
                         "R3" : '--',
@@ -138,7 +147,7 @@ async function getEntries(leaders) {
         for (var j = 0; j < 4; j++) {
             leaders.forEach(leader => {
                 if (allGolfers[j][k].localeCompare(leader.Golfer) == 0) {
-                    let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
+                    let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, thru:leader.Thru, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
                     golfers_scores.push(golfer_scores);
                 }
             });
