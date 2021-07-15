@@ -145,12 +145,18 @@ async function getEntries(leaders) {
     for (var k = 0; k < numOfEntrants; k++) {
         let golfers_scores = [];
         for (var j = 0; j < 4; j++) {
+            let found = false;
             leaders.forEach(leader => {
                 if (allGolfers[j][k].localeCompare(leader.Golfer) == 0) {
                     let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, thru:leader.Thru, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
                     golfers_scores.push(golfer_scores);
+                    found = true;
                 }
             });
+            if (!found) {
+                let golfer_scores = {golfer:"Invalid Name", score:0, place:0, status:"Invalid", thru:0, round1:0, round2:0, round3:0, round4:0};
+                golfers_scores.push(golfer_scores);
+            }
         }
 
         for (var x = 0; x < 4; x++) {
