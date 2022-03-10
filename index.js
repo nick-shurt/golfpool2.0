@@ -1,8 +1,6 @@
 const par = 70;
 
 const express = require('express');
-const puppeteer = require('puppeteer');
-//const mongoose = require('mongoose');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const http = require("https");
 
@@ -31,32 +29,13 @@ app.get('/test', async function (req, res) {
     res.send(leaders);
 });
 
-/*app.get('/add-entry', (req, res) => {
-    const entry = new Entry({
-        entrant: 'Nick Shurtleff',
-        tier1golfer: 'Jon Rahm',
-        tier2golfer: 'Patrick Cantlay',
-        tier3golfer: 'Patrick Reed',
-        tier4golfer: 'Ian Poulter',
-        tiebreaker: '-9'
-    });
-
-    entry.save()
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-})*/
-
 function getLeaders() {
     return new Promise((resolve, reject) => {
         const options = {
             "method": "GET",
             "hostname": "golf-leaderboard-data.p.rapidapi.com",
             "port": null,
-            "path": "/leaderboard/294",
+            "path": "/leaderboard/382",
             "headers": {
                 "x-rapidapi-key": "21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df",
                 "x-rapidapi-host": "golf-leaderboard-data.p.rapidapi.com",
