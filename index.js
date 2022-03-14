@@ -144,9 +144,6 @@ async function getEntries(leaders) {
             }
             if (golfers_scores[x].status == 'cut') {
                 let score  = (golfers_scores[x].round1 - par) + (golfers_scores[x].round2 - par);
-                
-                // temp glitch fix
-                if (score == 4) { score = 5; }
 
                 score += (80 - par) * 2;
                 golfers_scores[x].score = (score > 0) ? '+' + score : score;
