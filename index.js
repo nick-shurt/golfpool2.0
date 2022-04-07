@@ -132,6 +132,15 @@ async function getEntries(leaders) {
                     golfers_scores.push(golfer_scores);
                     found = true;
                 }
+                if (allGolfers[j][k] == 'J. J. Spaun') {
+                    var lastName1 = allGolfers[j][k].substring(allGolfers[j][k].indexOf('S'), allGolfers[j][k].length);
+                    var lastName2 = leader.Golfer.substring(leader.Golfer.indexOf('S'), leader.Golfer.length);
+                    if (lastName1.localeCompare(lastName2) == 0) {
+                        let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, thru:leader.Thru, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
+                        golfers_scores.push(golfer_scores);
+                        found = true;
+                    }
+                }
             });
             if (!found) {
                 console.log('Invalid Guy: ' + allGolfers[j][k]);
