@@ -105,7 +105,7 @@ async function getEntries(leaders) {
     const rows = await sheet.getRows();
     
     let numOfEntrants = sheet.rowCount - 1;
-    console.log(numOfEntrants);
+    //console.log(numOfEntrants);
     for (var i = 0; i < numOfEntrants; i++) {
         entrants.push(rows[i].Name);
         tier1golfers.push(rows[i].Tier1);
@@ -126,7 +126,7 @@ async function getEntries(leaders) {
         for (var j = 0; j < 4; j++) {
             let found = false;
             leaders.forEach(leader => {
-                console.log('fetched guy: ' + leader.Golfer);
+                //console.log('fetched guy: ' + leader.Golfer);
                 if (allGolfers[j][k].localeCompare(leader.Golfer) == 0) {
                     let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, thru:leader.Thru, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
                     golfers_scores.push(golfer_scores);
