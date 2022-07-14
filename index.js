@@ -184,6 +184,7 @@ async function getEntries(leaders) {
             tiebreaker: tiebreakers[k],
             tiebreaker_diff: t_diff
         });
+        console.log('Entries: ' + entries);
     }
     
     entries.entry.sort((a, b) => (a.totalScore < b.totalScore) ? 1 : ((a.totalScore == b.totalScore) ? ((a.tiebreaker_diff < b.tiebreaker_diff) ? 1 : -1) : -1));
