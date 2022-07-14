@@ -25,7 +25,7 @@ app.get('/data', async function (req, res) {
 
 app.get('/test', async function (req, res) {
     let leaders = await getLeaders();
-    console.log(leaders);
+    //console.log(leaders);
     res.send(leaders);
 });
 
@@ -116,7 +116,7 @@ async function getEntries(leaders) {
     }
 
     let allGolfers = [tier1golfers, tier2golfers, tier3golfers, tier4golfers];
-    console.log('Golfers: ' + allGolfers);
+
     let entries = {
         entry: []
     };
@@ -126,7 +126,7 @@ async function getEntries(leaders) {
         for (var j = 0; j < 4; j++) {
             let found = false;
             leaders.forEach(leader => {
-                console.log(leader.Golfer);
+                console.log('fetched guy: ' + leader.Golfer);
                 if (allGolfers[j][k].localeCompare(leader.Golfer) == 0) {
                     let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, thru:leader.Thru, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
                     golfers_scores.push(golfer_scores);
@@ -184,7 +184,6 @@ async function getEntries(leaders) {
             tiebreaker: tiebreakers[k],
             tiebreaker_diff: t_diff
         });
-        console.log('Entries: ' + entries);
     }
     
     entries.entry.sort((a, b) => (a.totalScore < b.totalScore) ? 1 : ((a.totalScore == b.totalScore) ? ((a.tiebreaker_diff < b.tiebreaker_diff) ? 1 : -1) : -1));
