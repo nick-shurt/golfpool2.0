@@ -116,7 +116,7 @@ async function getEntries(leaders) {
     }
 
     let allGolfers = [tier1golfers, tier2golfers, tier3golfers, tier4golfers];
-
+    console.log('Golfers: ' + allGolfers);
     let entries = {
         entry: []
     };
