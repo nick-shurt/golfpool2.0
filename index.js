@@ -150,7 +150,7 @@ async function getEntries(leaders) {
         }
 
         for (var x = 0; x < 4; x++) {
-            if (golfers_scores[x].status != 'cut' && golfers_scores[x].status != 'wd' && golfers_scores[x].status != 'dq') {
+            if (golfers_scores[x].status != 'cut' && golfers_scores[x].status != 'wd' && golfers_scores[x].status != 'dq' || golfers_scores[x].status != 'withdrawn') {
                 golfers_scores[x].score = (golfers_scores[x].score > 0) ? '+' + golfers_scores[x].score : golfers_scores[x].score;
             }
             if (golfers_scores[x].status == 'cut') {
@@ -160,7 +160,7 @@ async function getEntries(leaders) {
                 golfers_scores[x].score = (score > 0) ? '+' + score : score;
                 golfers_scores[x].thru = 'c';
             }
-            if (golfers_scores[x].status == 'wd' || golfers_scores[x].status == 'dq') {
+            if (golfers_scores[x].status == 'wd' || golfers_scores[x].status == 'dq' || golfers_scores[x].status == 'withdrawn') {
                 //let score  = (golfers_scores[x].round1 == '--') ? 80 - par : golfers_scores[x].round1;
                 //score += (golfers_scores[x].round2 == '--') ? 80 - par : golfers_scores[x].round2;
                 //score += (golfers_scores[x].round3 == '--') ? 80 - par : golfers_scores[x].round3;
