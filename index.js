@@ -35,7 +35,7 @@ function getLeaders() {
             "method": "GET",
             "hostname": "golf-leaderboard-data.p.rapidapi.com",
             "port": null,
-            "path": "/leaderboard/507",
+            "path": "/leaderboard/511",
             "headers": {
                 "x-rapidapi-key": "21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df",
                 "x-rapidapi-host": "golf-leaderboard-data.p.rapidapi.com",
@@ -68,7 +68,7 @@ function getLeaders() {
                     if (leader.holes_played == 18) {
                         thru = 'F';
                     }
-
+                    console.log('holes played: ' + leader.holes_played);
                     leaders.push({
                         "Place" : leader.position,
                         "Golfer" : name,
