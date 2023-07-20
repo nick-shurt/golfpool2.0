@@ -64,11 +64,10 @@ function getLeaders() {
                     let thru = '--';
                     if (leader.holes_played != 0) {
                         thru = leader.holes_played;
-                    }
-                    if (leader.holes_played == 18) {
+                    } else if (leader.status === 'complete') {
                         thru = 'F';
                     }
-                    console.log('holes played: ' + leader.holes_played);
+                    
                     leaders.push({
                         "Place" : leader.position,
                         "Golfer" : name,
