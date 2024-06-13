@@ -1,4 +1,4 @@
-const par = 72;
+const par = 70;
 
 const express = require('express');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
