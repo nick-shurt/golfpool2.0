@@ -65,7 +65,7 @@ function getLeaders() {
                     if (leader.holes_played != 0) {
                         thru = leader.holes_played;
                     }
-                    if (leader.holes_played == 18) {
+                    if (leader.holes_played == 18 || leader.status == 'complete') {
                         thru = 'F';
                     }
                     
