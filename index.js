@@ -1,4 +1,4 @@
-const par = 71;
+const par = 72;
 
 const express = require('express');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
@@ -35,7 +35,7 @@ function getLeaders() {
             "method": "GET",
             "hostname": "golf-leaderboard-data.p.rapidapi.com",
             "port": null,
-            "path": "/leaderboard/668",
+            "path": "/leaderboard/748",
             "headers": {
                 "x-rapidapi-key": "21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df",
                 "x-rapidapi-host": "golf-leaderboard-data.p.rapidapi.com",
