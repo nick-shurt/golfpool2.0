@@ -53,7 +53,7 @@ function getLeaders() {
                 const body = Buffer.concat(chunks);
                 console.log(body.toString());
                 let jsonRes = JSON.parse(body);
-                jsonRes.results.leaderboardRows.forEach(leader => {
+                jsonRes.leaderboardRows.forEach(leader => {
                     let name = leader.firstName + ' ' + leader.lastName;
                     let round1 = '--';
                     let round2 = '--';
