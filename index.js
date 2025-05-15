@@ -32,14 +32,13 @@ app.get('/test', async function (req, res) {
 function getLeaders() {
     return new Promise((resolve, reject) => {
         const options = {
-            "method": "GET",
-            "hostname": "golf-leaderboard-data.p.rapidapi.com",
-            "port": null,
-            "path": "/leaderboard/755",
-            "headers": {
-                "x-rapidapi-key": "21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df",
-                "x-rapidapi-host": "golf-leaderboard-data.p.rapidapi.com",
-                "useQueryString": true
+            method: 'GET',
+            hostname: 'live-golf-data.p.rapidapi.com',
+            port: null,
+            path: '/leaderboard?orgId=1&tournId=033&year=2025',
+            headers: {
+                'x-rapidapi-key': '21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df',
+                'x-rapidapi-host': 'live-golf-data.p.rapidapi.com'
             }
         };
 
@@ -53,26 +52,26 @@ function getLeaders() {
             res.on("end", function () {
                 const body = Buffer.concat(chunks);
                 let jsonRes = JSON.parse(body);
-                jsonRes.results.leaderboard.forEach(leader => {
-                    let name = leader.first_name + ' ' + leader.last_name;
-                    let round1 = leader.rounds[0].strokes;
+                jsonRes.results.leaderboardRows.forEach(leader => {
+                    let name = leader.firstName + ' ' + leader.lastName;
+                    let round1 = '--';
                     let round2 = '--';
                     if (typeof leader.rounds[1] !== 'undefined') {
                         round2 = leader.rounds[1].strokes;
                     }
 
                     let thru = '--';
-                    if (leader.holes_played != 0) {
-                        thru = leader.holes_played;
+                    if (leader.thru != 0) {
+                        thru = leader.thru;
                     }
-                    if (leader.holes_played == 18 || leader.status == 'complete') {
+                    if (leader.thru == 18 || leader.status == 'complete') {
                         thru = 'F';
                     }
                     
                     leaders.push({
                         "Place" : leader.position,
                         "Golfer" : name,
-                        "Score" : leader.total_to_par,
+                        "Score" : leader.total,
                         "Status" : leader.status,
                         "Thru" : thru,
                         "R1" : round1,
