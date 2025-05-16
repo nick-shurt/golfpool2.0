@@ -37,7 +37,7 @@ function getLeaders() {
             port: null,
             path: '/leaderboard?orgId=1&tournId=033&year=2025',
             headers: {
-                'x-rapidapi-key': '21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df',
+                'x-rapidapi-key': '8cb303293emsh298fe16d2316d8ap16f094jsn59db8eb44c08',
                 'x-rapidapi-host': 'live-golf-data.p.rapidapi.com'
             }
         };
