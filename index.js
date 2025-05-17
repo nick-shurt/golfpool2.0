@@ -51,15 +51,14 @@ function getLeaders() {
 
             res.on("end", function () {
                 const body = Buffer.concat(chunks);
-                console.log(body.toString());
                 let jsonRes = JSON.parse(body);
                 jsonRes.leaderboardRows.forEach(leader => {
                     let name = leader.firstName + ' ' + leader.lastName;
-                    let round1 = '--';
-                    let round2 = '--';
-                    if (typeof leader.rounds[1] !== 'undefined') {
-                        round2 = leader.rounds[1].strokes;
-                    }
+                    let round1 = (typeof leader.rounds[0] !== 'undefined') ? JSON.stringify(leader.rounds[0].strokes).replace(/\D/g, '') : '--';
+                    let round2 = (typeof leader.rounds[1] !== 'undefined') ? JSON.stringify(leader.rounds[0].strokes).replace(/\D/g, '') : '--';
+                    
+                    //console.log('R1: ' + round1);
+                    //console.log('R2: ' + round2);
 
                     let thru = '--';
                     if (leader.thru != 0) {
@@ -154,7 +153,7 @@ async function getEntries(leaders) {
                 let score  = (golfers_scores[x].round1 - par) + (golfers_scores[x].round2 - par);
 
                 score += (80 - par) * 2;
-                //golfers_scores[x].score = score;
+                golfers_scores[x].score = (score > 0) ? '+' + score : score;
                 golfers_scores[x].thru = 'c';
             }
             if (golfers_scores[x].status == 'wd' || golfers_scores[x].status == 'dq' || golfers_scores[x].status == 'withdrawn') {
