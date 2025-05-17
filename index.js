@@ -154,7 +154,7 @@ async function getEntries(leaders) {
                 let score  = (golfers_scores[x].round1 - par) + (golfers_scores[x].round2 - par);
 
                 score += (80 - par) * 2;
-                //golfers_scores[x].score = (score > 0) ? '+' + score : score;
+                golfers_scores[x].score = score;
                 golfers_scores[x].thru = 'c';
             }
             if (golfers_scores[x].status == 'wd' || golfers_scores[x].status == 'dq' || golfers_scores[x].status == 'withdrawn') {
