@@ -1,4 +1,4 @@
-const par = 71;
+const par = 70;
 
 const express = require('express');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
@@ -32,13 +32,14 @@ app.get('/test', async function (req, res) {
 function getLeaders() {
     return new Promise((resolve, reject) => {
         const options = {
-            method: 'GET',
-            hostname: 'live-golf-data.p.rapidapi.com',
-            port: null,
-            path: '/leaderboard?orgId=1&tournId=033&year=2025',
-            headers: {
-                'x-rapidapi-key': '6b8b73a00dmshac8f0d6217c1c90p1a89a8jsn880a8f380615',
-                'x-rapidapi-host': 'live-golf-data.p.rapidapi.com'
+            "method": "GET",
+            "hostname": "golf-leaderboard-data.p.rapidapi.com",
+            "port": null,
+            "path": "/leaderboard/759",
+            "headers": {
+                "x-rapidapi-key": "21ce5dac67msh86911ecea6ef3cfp13b4f3jsn734afe0aa2df",
+                "x-rapidapi-host": "golf-leaderboard-data.p.rapidapi.com",
+                "useQueryString": true
             }
         };
 
@@ -52,26 +53,26 @@ function getLeaders() {
             res.on("end", function () {
                 const body = Buffer.concat(chunks);
                 let jsonRes = JSON.parse(body);
-                jsonRes.leaderboardRows.forEach(leader => {
-                    let name = leader.firstName + ' ' + leader.lastName;
-                    let round1 = (typeof leader.rounds[0] !== 'undefined') ? JSON.stringify(leader.rounds[0].strokes).replace(/\D/g, '') : '--';
-                    let round2 = (typeof leader.rounds[1] !== 'undefined') ? JSON.stringify(leader.rounds[0].strokes).replace(/\D/g, '') : '--';
-                    
-                    //console.log('R1: ' + round1);
-                    //console.log('R2: ' + round2);
+                jsonRes.results.leaderboard.forEach(leader => {
+                    let name = leader.first_name + ' ' + leader.last_name;
+                    let round1 = leader.rounds[0].strokes;
+                    let round2 = '--';
+                    if (typeof leader.rounds[1] !== 'undefined') {
+                        round2 = leader.rounds[1].strokes;
+                    }
 
                     let thru = '--';
-                    if (leader.thru != 0) {
-                        thru = leader.thru;
+                    if (leader.holes_played != 0) {
+                        thru = leader.holes_played;
                     }
-                    if (leader.thru == 18 || leader.status == 'complete') {
+                    if (leader.holes_played == 18 || leader.status == 'complete') {
                         thru = 'F';
                     }
                     
                     leaders.push({
                         "Place" : leader.position,
                         "Golfer" : name,
-                        "Score" : leader.total,
+                        "Score" : leader.total_to_par,
                         "Status" : leader.status,
                         "Thru" : thru,
                         "R1" : round1,
@@ -149,6 +150,9 @@ async function getEntries(leaders) {
         }
 
         for (var x = 0; x < 4; x++) {
+            if (golfers_scores[x].status != 'cut' && golfers_scores[x].status != 'wd' && golfers_scores[x].status != 'dq' || golfers_scores[x].status != 'withdrawn') {
+                golfers_scores[x].score = (golfers_scores[x].score > 0) ? '+' + golfers_scores[x].score : golfers_scores[x].score;
+            }
             if (golfers_scores[x].status == 'cut') {
                 let score  = (golfers_scores[x].round1 - par) + (golfers_scores[x].round2 - par);
 
