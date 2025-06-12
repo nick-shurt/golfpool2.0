@@ -16,11 +16,17 @@ app.use(express.static('public'));
 
 app.get('/data', async function (req, res) {
     //let leaders = await scrape('https://www.espn.com/golf/leaderboard/_/tournamentId/401243418');
-    let leaders = await getLeaders();
-    //console.log(leaders);
-    let entries = await getEntries(leaders);
-    let data = [leaders[0], entries];
-    res.send(data);
+    try {
+        let leaders = await getLeaders();
+        //console.log(leaders);
+        let entries = await getEntries(leaders);
+        let data = [leaders[0], entries];
+        res.send(data);
+    } catch (error) {
+        console.error('Error: ' + error);
+        console.log('Error: ' + error);
+    }
+    
 });
 
 app.get('/test', async function (req, res) {
