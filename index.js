@@ -133,7 +133,7 @@ async function getEntries(leaders) {
             let found = false;
             leaders.forEach(leader => {
                 //console.log('fetched guy: ' + leader.Golfer);
-                if (allGolfers[j][k].localeCompare(leader.Golfer) == 0) {
+                if (allGolfers[j][k].toLowerCase() == leader.Golfer.toLowerCase()) {
                     let golfer_scores = {golfer:leader.Golfer, score:leader.Score, place:leader.Place, status:leader.Status, thru:leader.Thru, round1:leader.R1, round2:leader.R2, round3:leader.R3, round4:leader.R4};
                     golfers_scores.push(golfer_scores);
                     found = true;
