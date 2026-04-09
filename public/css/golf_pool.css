@@ -23,7 +23,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;*/
-    background: #000;
+    background: #076652;
 }
 
 #wrapper {
@@ -60,7 +60,7 @@ body {
 .loader {
     border: 10px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 10px solid #2f70a8;
+    border-top: 10px solid #1a9c80;
     width: 50px;
     height: 50px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
